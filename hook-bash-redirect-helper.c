@@ -45,7 +45,7 @@ int hook_dup2(int oldFd, int newFd)
         && !(strstr(oldPath, "pipe:["))
         && !(strstr(oldPath, "/dev") && strstr(newPath, "/dev"))) {
         gsNewFd = oldFd;
-        syslog(LOG_ERR, "%s, %s --> %s, old:%d new: %d ret: %d", procPath, oldPath, newPath, oldFd, newFd, gsNewFd);
+        DLOG("%s, %s --> %s, old:%d new: %d ret: %d", procPath, oldPath, newPath, oldFd, newFd, gsNewFd);
     }
 
     return myFd;
@@ -64,7 +64,7 @@ int hook_close (int fd)
     if (fd == gsNewFd) {
         char fdPath[PATH_MAX] = {0};
         hook_common_read_fd_path(fd, fdPath, sizeof(fdPath));
-        syslog(LOG_ERR, "fd: %d --> close: %s", gsNewFd, fdPath);
+        DLOG("fd: %d --> close: %s", gsNewFd, fdPath);
     }
 
     return ret;
